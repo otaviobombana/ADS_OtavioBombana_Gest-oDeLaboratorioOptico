@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Cadastro de Óticas</title>
+</h:head>
+
+<h:body>
+    <h:form id="form">
+        <p:growl id="mensagens" showDetail="true" life="4000"/>
+
+        <p:panel header="Gestão de Óticas">
+
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Nova Ótica"
+                                     icon="pi pi-plus"
+                                     action="#{oticaController.novo}"
+                                     update="cadastro"
+                                     process="@this"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:panel id="cadastro" header="Dados da Ótica">
+                <p:messages/>
+
+                <p:outputLabel for="nome" value="Nome *"/>
+                <p:inputText id="nome"
+                             value="#{oticaController.otica.nome}"
+                             required="true"
+                             requiredMessage="Informe o nome da ótica."
+                             maxlength="150"
+                             style="width:100%"/>
+
+                <p:outputLabel for="cnpj" value="CNPJ"/>
+                <p:inputText id="cnpj"
+                             value="#{oticaController.otica.cnpj}"
+                             maxlength="18"
+                             style="width:100%"/>
+
+                <p:outputLabel for="telefone" value="Telefone"/>
+                <p:inputText id="telefone"
+                             value="#{oticaController.otica.telefone}"
+                             maxlength="20"
+                             style="width:100%"/>
+
+                <p:outputLabel for="email" value="E-mail"/>
+                <p:inputText id="email"
+                             value="#{oticaController.otica.email}"
+                             maxlength="150"
+                             style="width:100%"/>
+
+                <p:outputLabel for="endereco" value="Endereço"/>
+                <p:inputText id="endereco"
+                             value="#{oticaController.otica.endereco}"
+                             maxlength="200"
+                             style="width:100%"/>
+
+                <br/><br/>
+
+                <p:commandButton value="Salvar"
+                                 icon="pi pi-save"
+                                 action="#{oticaController.salvar}"
+                                 update="@form"
+                                 process="@form"/>
+
+                <p:commandButton value="Limpar"
+                                 icon="pi pi-refresh"
+                                 action="#{oticaController.novo}"
+                                 update="cadastro"
+                                 process="@this"
+                                 style="margin-left:8px"/>
+            </p:panel>
+
+            <p:separator/>
+
+            <p:outputLabel for="pesquisa" value="Pesquisar por nome"/>
+            <p:inputText id="pesquisa"
+                         value="#{oticaController.pesquisa}"/>
+
+            <p:commandButton value="Pesquisar"
+                             icon="pi pi-search"
+                             action="#{oticaController.pesquisar}"
+                             update="tabela"
+                             process="pesquisa @this"/>
+
+            <p:commandButton value="Limpar pesquisa"
+                             action="#{oticaController.atualizarLista}"
+                             update="tabela"
+                             process="@this"
+                             style="margin-left:8px"/>
+
+            <p:dataTable id="tabela"
+                         value="#{oticaController.oticas}"
+                         var="item"
+                         emptyMessage="Nenhuma ótica cadastrada."
+                         paginator="true"
+                         rows="10"
+                         responsiveLayout="scroll">
+
+                <p:column headerText="ID">
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+                <p:column headerText="Nome" sortBy="#{item.nome}">
+                    <h:outputText value="#{item.nome}"/>
+                </p:column>
+
+                <p:column headerText="CNPJ">
+                    <h:outputText value="#{item.cnpj}"/>
+                </p:column>
+
+                <p:column headerText="Telefone">
+                    <h:outputText value="#{item.telefone}"/>
+                </p:column>
+
+                <p:column headerText="E-mail">
+                    <h:outputText value="#{item.email}"/>
+                </p:column>
+
+                <p:column headerText="Ações">
+                    <p:commandButton value="Editar"
+                                     icon="pi pi-pencil"
+                                     action="#{oticaController.editar(item)}"
+                                     update="cadastro"
+                                     process="@this"/>
+
+                    <p:commandButton value="Excluir"
+                                     icon="pi pi-trash"
+                                     action="#{oticaController.excluir(item)}"
+                                     update="@form"
+                                     process="@this"
+                                     style="margin-left:5px">
+                        <p:confirm header="Confirmação"
+                                   message="Deseja excluir esta ótica?"
+                                   icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:confirmDialog global="true">
+                <p:commandButton value="Sim"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-yes"
+                                 icon="pi pi-check"/>
+
+                <p:commandButton value="Não"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-no"
+                                 icon="pi pi-times"/>
+            </p:confirmDialog>
+
+        </p:panel>
+    </h:form>
+</h:body>
+</html>
