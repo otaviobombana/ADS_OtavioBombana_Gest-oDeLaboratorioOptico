@@ -1,0 +1,108 @@
+
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <div class="layout-sidebar">
+
+        <div style="
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:20px 16px;
+            border-bottom:1px solid #e5e7eb;
+        ">
+
+            <div style="display:flex; align-items:center; gap:10px;">
+                <i class="pi pi-eye"
+                   style="font-size:25px; color:#06a6c7;"></i>
+
+                <span style="font-size:16px; font-weight:700; color:#344054;">
+                    Laboratório Óptico
+                </span>
+            </div>
+
+            <button type="button"
+                    title="Fechar menu"
+                    aria-label="Fechar menu"
+                    onclick="document.querySelector('.layout-wrapper').classList.remove('layout-toggle-active');"
+                    style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        width:34px;
+                        height:34px;
+                        border:0;
+                        border-radius:8px;
+                        background:#f1f5f9;
+                        color:#64748b;
+                        cursor:pointer;
+                        font-size:16px;
+                    ">
+                <i class="pi pi-times"></i>
+            </button>
+
+        </div>
+
+        <div class="layout-menu-container" style="padding:15px 12px;">
+
+            <div style="
+                padding:8px 12px;
+                margin-bottom:10px;
+                color:#94a3b8;
+                font-size:11px;
+                font-weight:700;
+                letter-spacing:1px;
+            ">
+                MENU PRINCIPAL
+            </div>
+
+            <ul class="layout-menu" style="list-style:none; padding:0; margin:0;">
+
+                <li style="margin-bottom:6px;">
+                    <h:link outcome="/oticas.xhtml"
+                            style="display:flex; align-items:center; gap:12px; padding:13px 14px; border-radius:8px; color:#475569; text-decoration:none; font-weight:600;">
+                        <i class="pi pi-home" style="font-size:18px; color:#06a6c7;"></i>
+                        <span>Início</span>
+                    </h:link>
+                </li>
+
+                <li style="margin-bottom:6px;">
+                    <h:link outcome="/oticas.xhtml"
+                            style="display:flex; align-items:center; gap:12px; padding:13px 14px; border-radius:8px; color:#475569; text-decoration:none; font-weight:600;">
+                        <i class="pi pi-building" style="font-size:18px; color:#06a6c7;"></i>
+                        <span>Gestão de Óticas</span>
+                    </h:link>
+                </li>
+
+                <li style="margin-bottom:6px;">
+                    <h:link outcome="/lentes.xhtml"
+                            style="display:flex; align-items:center; gap:12px; padding:13px 14px; border-radius:8px; color:#475569; text-decoration:none; font-weight:600;">
+                        <i class="pi pi-eye" style="font-size:18px; color:#06a6c7;"></i>
+                        <span>Cadastro de Lentes</span>
+                    </h:link>
+                </li>
+
+            </ul>
+        </div>
+
+        <div style="
+            position:absolute;
+            bottom:15px;
+            left:15px;
+            right:15px;
+            padding:12px;
+            border-top:1px solid #e5e7eb;
+            text-align:center;
+            color:#94a3b8;
+            font-size:11px;
+        ">
+            Sistema de Gestão Óptica
+            <br/>
+            Versão 1.0
+        </div>
+
+    </div>
+
+</ui:composition>

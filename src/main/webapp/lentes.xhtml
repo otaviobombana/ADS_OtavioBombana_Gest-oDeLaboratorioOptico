@@ -1,0 +1,172 @@
+
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        Cadastro de Lentes
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form">
+
+            <p:growl id="mensagens" showDetail="true" life="4000"/>
+
+            <p:panel header="Cadastro de Lentes">
+
+                <p:panelGrid columns="2"
+                             layout="grid"
+                             styleClass="ui-fluid"
+                             columnClasses="ui-grid-col-6,ui-grid-col-6">
+
+                    <p:outputLabel for="codigo" value="Código"/>
+                    <p:inputText id="codigo"
+                                 value="#{lenteController.lente.codigo}"
+                                 required="true"
+                                 requiredMessage="Informe o código da lente."/>
+
+                    <p:outputLabel for="descricao" value="Descrição"/>
+                    <p:inputText id="descricao"
+                                 value="#{lenteController.lente.descricao}"
+                                 required="true"
+                                 requiredMessage="Informe a descrição da lente."/>
+
+                    <p:outputLabel for="valor" value="Valor"/>
+                    <p:inputNumber id="valor"
+                                   value="#{lenteController.lente.valor}"
+                                   decimalPlaces="2"
+                                   decimalSeparator=","
+                                   thousandSeparator="."
+                                   symbol="R$ "
+                                   required="true"
+                                   requiredMessage="Informe o valor da lente."/>
+
+                    <p:outputLabel for="ativo" value="Situação"/>
+                    <p:selectBooleanCheckbox id="ativo"
+                                             value="#{lenteController.lente.ativo}"
+                                             itemLabel="Lente ativa"/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <p:commandButton value="Salvar"
+                                 icon="pi pi-save"
+                                 action="#{lenteController.salvar}"
+                                 update="cadastro tabela mensagens"
+                                 styleClass="ui-button-success"/>
+
+                <p:commandButton value="Novo"
+                                 icon="pi pi-plus"
+                                 action="#{lenteController.novo}"
+                                 process="@this"
+                                 update="cadastro"
+                                 styleClass="ui-button-secondary"
+                                 style="margin-left:8px"/>
+
+            </p:panel>
+
+            <p:spacer height="15"/>
+
+            <p:panel header="Lentes cadastradas">
+
+                <p:outputLabel for="pesquisa" value="Pesquisar por código ou descrição"/>
+
+                <p:inputText id="pesquisa"
+                             value="#{lenteController.pesquisa}"
+                             placeholder="Digite o código ou descrição..."/>
+
+                <p:commandButton value="Pesquisar"
+                                 icon="pi pi-search"
+                                 action="#{lenteController.pesquisar}"
+                                 process="@this pesquisa"
+                                 update="tabela"
+                                 style="margin-top:8px"/>
+
+                <p:commandButton value="Limpar pesquisa"
+                                 icon="pi pi-times"
+                                 action="#{lenteController.atualizarLista}"
+                                 process="@this"
+                                 update="tabela"
+                                 styleClass="ui-button-secondary"
+                                 style="margin-left:8px"/>
+
+                <p:separator/>
+
+                <p:dataTable id="tabela"
+                             value="#{lenteController.lentes}"
+                             var="item"
+                             emptyMessage="Nenhuma lente cadastrada."
+                             paginator="true"
+                             rows="10"
+                             responsiveLayout="scroll">
+
+                    <p:column headerText="Código">
+                        <h:outputText value="#{item.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{item.descricao}"/>
+                    </p:column>
+
+                    <p:column headerText="Valor">
+                        <h:outputText value="#{item.valor}">
+                            <f:convertNumber type="currency"
+                                             currencySymbol="R$ "
+                                             locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Situação">
+                        <p:tag value="#{item.ativo ? 'Ativa' : 'Inativa'}"
+                               severity="#{item.ativo ? 'success' : 'danger'}"/>
+                    </p:column>
+
+                    <p:column headerText="Ações" width="150">
+
+                        <p:commandButton icon="pi pi-pencil"
+                                         title="Editar"
+                                         action="#{lenteController.editar(item)}"
+                                         process="@this"
+                                         update="cadastro mensagens"
+                                         styleClass="ui-button-warning"
+                                         style="margin-right:5px"/>
+
+                        <p:commandButton icon="pi pi-trash"
+                                         title="Excluir"
+                                         action="#{lenteController.excluir(item)}"
+                                         process="@this"
+                                         update="tabela mensagens"
+                                         styleClass="ui-button-danger">
+                            <p:confirm header="Confirmação"
+                                       message="Deseja realmente excluir esta lente?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panel>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-yes ui-button-danger"
+                                 icon="pi pi-check"/>
+                <p:commandButton value="Não"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-no ui-button-secondary"
+                                 icon="pi pi-times"/>
+            </p:confirmDialog>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

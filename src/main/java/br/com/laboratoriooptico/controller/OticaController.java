@@ -48,7 +48,7 @@ public class OticaController implements Serializable {
             adicionarMensagem(
                     FacesMessage.SEVERITY_ERROR,
                     "Erro",
-                    "Não foi possível salvar a ótica."
+                    "Não foi possível salvar a ótica: " + e.getMessage()
             );
         }
     }
@@ -58,7 +58,30 @@ public class OticaController implements Serializable {
     }
 
     public void editar(Otica selecionada) {
-        otica = facade.buscarPorId(selecionada.getId());
+        try {
+            otica = facade.buscarPorId(selecionada.getId());
+
+            if (otica != null) {
+                adicionarMensagem(
+                        FacesMessage.SEVERITY_INFO,
+                        "Edição",
+                        "Ótica selecionada: " + otica.getNome()
+                );
+            } else {
+                adicionarMensagem(
+                        FacesMessage.SEVERITY_WARN,
+                        "Atenção",
+                        "Ótica não encontrada."
+                );
+            }
+
+        } catch (Exception e) {
+            adicionarMensagem(
+                    FacesMessage.SEVERITY_ERROR,
+                    "Erro",
+                    "Não foi possível carregar a ótica: " + e.getMessage()
+            );
+        }
     }
 
     public void excluir(Otica selecionada) {
@@ -76,7 +99,7 @@ public class OticaController implements Serializable {
             adicionarMensagem(
                     FacesMessage.SEVERITY_ERROR,
                     "Erro",
-                    "Não foi possível excluir a ótica."
+                    "Não foi possível excluir a ótica: " + e.getMessage()
             );
         }
     }

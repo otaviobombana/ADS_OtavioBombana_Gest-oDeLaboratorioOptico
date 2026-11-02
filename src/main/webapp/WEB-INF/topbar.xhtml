@@ -1,0 +1,32 @@
+
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <div class="layout-topbar">
+        <div class="layout-topbar-left">
+
+            <a href="#"
+               id="layout-menu-btn"
+               class="menu-button"
+               title="Abrir ou recolher menu"
+               aria-label="Abrir ou recolher menu"
+               onclick="document.querySelector('.layout-wrapper').classList.toggle('layout-toggle-active'); return false;">
+                <i class="pi pi-bars"></i>
+            </a>
+
+            <a href="#" class="layout-topbar-logo">
+                <span>Laboratório Óptico</span>
+            </a>
+
+        </div>
+
+        <div class="layout-topbar-right">
+            <span class="layout-topbar-item">
+                Sistema de Gestão
+            </span>
+        </div>
+    </div>
+
+</ui:composition>
